@@ -10,6 +10,6 @@
 	}
 	
 	dependencies {
-		
-		compile 'com.github.User:Repo:Tag'
+	
+	        compile 'com.github.wjygg:CommonRecycleView:0.0.1'
 	}
