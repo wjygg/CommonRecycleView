@@ -2,13 +2,14 @@
 通用的recycleview
 
 
-allprojects {
+	allprojects {
 		repositories {
 			...
 			maven { url 'https://www.jitpack.io' }
 		}
 	}
-  
-  dependencies {
+	
+	dependencies {
+		
 		compile 'com.github.User:Repo:Tag'
 	}
