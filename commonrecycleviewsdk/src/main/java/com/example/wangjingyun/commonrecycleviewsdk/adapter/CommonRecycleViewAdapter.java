@@ -2,6 +2,7 @@ package com.example.wangjingyun.commonrecycleviewsdk.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.wangjingyun.commonrecycleviewsdk.viewholder.CommonViewHolder;
@@ -34,7 +35,33 @@ public abstract  class CommonRecycleViewAdapter<T> extends RecyclerView.Adapter<
     }
 
     @Override
-    public void onBindViewHolder(CommonViewHolder holder, int position) {
+    public void onBindViewHolder(CommonViewHolder holder, final int position) {
+
+        if(mItemClickListener!=null){
+
+            holder.mConvertView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    mItemClickListener.onItemClick(position);
+                }
+            });
+        }
+
+        if(mLongClickListener!=null){
+
+            holder.mConvertView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+
+                    mLongClickListener.onItemLongClick(position);
+
+                    return false;
+                }
+            });
+
+        }
+
 
      convert(holder,mDatas.get(position));
 
@@ -74,6 +101,30 @@ public abstract  class CommonRecycleViewAdapter<T> extends RecyclerView.Adapter<
 
         this.notifyDataSetChanged();
 
+    }
+
+    /***************
+     * 设置条目点击和长按事件
+     *********************/
+    public OnItemClickListener mItemClickListener;
+    public OnLongClickListener mLongClickListener;
+
+    public void setOnItemClickListener(OnItemClickListener itemClickListener) {
+        this.mItemClickListener = itemClickListener;
+    }
+
+    public void setOnLongClickListener(OnLongClickListener longClickListener) {
+        this.mLongClickListener = longClickListener;
+    }
+
+    public interface OnItemClickListener{
+
+        void onItemClick(int position);
+    }
+
+    public interface OnLongClickListener{
+
+        void onItemLongClick(int position);
     }
 
 

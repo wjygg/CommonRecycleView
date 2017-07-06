@@ -3,10 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/CommonRecycleView.iml" filepath="$PROJECT_DIR$/CommonRecycleView.iml" />
-      <module fileurl="file://$PROJECT_DIR$/CommonRecycleView.iml" filepath="$PROJECT_DIR$/CommonRecycleView.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/commonrecycleviewsdk/commonrecycleviewsdk.iml" filepath="$PROJECT_DIR$/commonrecycleviewsdk/commonrecycleviewsdk.iml" />
       <module fileurl="file://$PROJECT_DIR$/commonrecycleviewsdk/commonrecycleviewsdk.iml" filepath="$PROJECT_DIR$/commonrecycleviewsdk/commonrecycleviewsdk.iml" />
     </modules>
   </component>

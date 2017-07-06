@@ -17,11 +17,11 @@ import android.widget.TextView;
 
 public class CommonViewHolder extends RecyclerView.ViewHolder {
 
-    private SparseArray<View> mviews;
+    public SparseArray<View> mviews;
 
-    private View mConvertView;
+    public View mConvertView;
 
-    private Context mcontext;
+    public Context mcontext;
 
     public CommonViewHolder(Context context,View itemView, ViewGroup parent) {
         super(itemView);
