@@ -63,11 +63,11 @@ public abstract  class CommonRecycleViewAdapter<T> extends RecyclerView.Adapter<
         }
 
 
-     convert(holder,mDatas.get(position));
+     convert(holder,position,mDatas.get(position));
 
     }
 
-    public abstract void convert(CommonViewHolder holder, T t);
+    public abstract void convert(CommonViewHolder holder,int position, T t);
 
 
     @Override
