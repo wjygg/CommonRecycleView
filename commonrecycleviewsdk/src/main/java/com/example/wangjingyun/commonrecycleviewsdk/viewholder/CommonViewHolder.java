@@ -45,6 +45,15 @@ public class CommonViewHolder extends RecyclerView.ViewHolder {
 
     }
 
+    public static CommonViewHolder get(Context context, ViewGroup parent, View view){
+
+
+        CommonViewHolder viewHolder=new CommonViewHolder(context,view,parent);
+
+        return  viewHolder;
+
+    }
+
 
     /**
      * 通过viewId获取控件
