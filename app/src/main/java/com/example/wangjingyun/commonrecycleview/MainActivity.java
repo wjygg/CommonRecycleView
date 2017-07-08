@@ -96,13 +96,13 @@ public class MainActivity extends AppCompatActivity implements CommonRecycleView
 
         View view = LayoutInflater.from(this).inflate(R.layout.item_mainhead_layout, recyclerView,false);
 
-
+        View view1 = LayoutInflater.from(this).inflate(R.layout.item_twomainhead_layout, recyclerView,false);
 
         adapter.setOnItemClickListener(this);
 
         recyclerView.setAdapter(adapter);
-
         adapter.addHeadViews(view);
+        adapter.addHeadViews(view1);
         adapter.addFooterViews(view);
     }
 
