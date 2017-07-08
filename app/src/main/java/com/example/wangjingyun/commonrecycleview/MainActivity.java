@@ -42,9 +42,9 @@ public class MainActivity extends AppCompatActivity implements CommonRecycleView
         }
         recyclerView= (RecyclerView) findViewById(R.id.recycleview);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+       recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
 
-   //     recyclerView.setLayoutManager(new GridLayoutManager(this,3));
+  //    recyclerView.setLayoutManager(new GridLayoutManager(this,3));
 
        /* 单布局 adapter
        adapter=new CommonRecycleViewAdapter<String>(this,datas,R.layout.item_main_layout) {
@@ -104,6 +104,7 @@ public class MainActivity extends AppCompatActivity implements CommonRecycleView
         adapter.addHeadViews(view);
         adapter.addHeadViews(view1);
         adapter.addFooterViews(view);
+        adapter.adjustSpanSize(recyclerView);
     }
 
     @Override

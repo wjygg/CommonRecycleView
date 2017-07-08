@@ -1,6 +1,8 @@
 package com.example.wangjingyun.commonrecycleviewsdk.adapter;
 
 import android.content.Context;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
@@ -189,5 +191,27 @@ public abstract class MultiItemCommonAdapter<T> extends CommonRecycleViewAdapter
     private boolean isFooterPosition(int position) {
         return position >= (mHeadViews.size() + mDatas.size());
     }
+
+
+    /**
+     * 解决GridLayoutManager添加头部和底部不占用一行的问题
+     *
+     * @param recycler
+     * @version 1.0
+     */
+    public void adjustSpanSize(RecyclerView recycler) {
+        if (recycler.getLayoutManager() instanceof GridLayoutManager) {
+            final GridLayoutManager layoutManager = (GridLayoutManager) recycler.getLayoutManager();
+            layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+                @Override
+                public int getSpanSize(int position) {
+                    boolean isHeaderOrFooter =
+                            isHeaderPosition(position) || isFooterPosition(position);
+                    return isHeaderOrFooter ? layoutManager.getSpanCount() : 1;
+                }
+            });
+        }
+    }
+
 
 }
