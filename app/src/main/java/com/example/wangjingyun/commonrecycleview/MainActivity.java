@@ -5,6 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.wangjingyun.commonrecycleviewsdk.adapter.CommonRecycleViewAdapter;
@@ -22,6 +25,7 @@ public class MainActivity extends AppCompatActivity implements CommonRecycleView
    // private CommonRecycleViewAdapter<String> adapter;
 
     private MultiItemCommonAdapter<String> adapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,13 +61,13 @@ public class MainActivity extends AppCompatActivity implements CommonRecycleView
            @Override
            public int getLayoutId(int itemType) {
 
-               if(itemType==R.layout.item_mainhead_layout){
+               if(itemType==R.layout.item_mulitype_layout){
 
-                   return R.layout.item_mainhead_layout;
-
+                   return  R.layout.item_mulitype_layout;
                }
 
                return R.layout.item_main_layout;
+
            }
 
            @Override
@@ -71,14 +75,14 @@ public class MainActivity extends AppCompatActivity implements CommonRecycleView
 
                if(position==0){
 
-                   return R.layout.item_mainhead_layout;
-
+                   return  R.layout.item_mulitype_layout;
                }
 
                return R.layout.item_main_layout;
            }
        }) {
            @Override
+
            public void convert(CommonViewHolder holder,int position, String s) {
 
                if(position!=0){
@@ -86,14 +90,26 @@ public class MainActivity extends AppCompatActivity implements CommonRecycleView
                    holder.setText(R.id.text,s);
                }
 
+
            }
        };
+
+        View view = LayoutInflater.from(this).inflate(R.layout.item_mainhead_layout, recyclerView,false);
 
 
 
         adapter.setOnItemClickListener(this);
 
         recyclerView.setAdapter(adapter);
+
+        adapter.addHeadViews(view);
+        adapter.addFooterViews(view);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
 
     }
 

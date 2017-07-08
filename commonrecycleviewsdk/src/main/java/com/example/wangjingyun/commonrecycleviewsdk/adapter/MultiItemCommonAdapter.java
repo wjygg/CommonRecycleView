@@ -86,6 +86,23 @@ public abstract class MultiItemCommonAdapter<T> extends CommonRecycleViewAdapter
     }
 
 
+    @Override
+    public void onBindViewHolder(CommonViewHolder holder, int position) {
+
+        if (isHeaderPosition(position) || isFooterPosition(position)) {
+            return;
+        }
+        // 计算一下位置
+        position = position - mHeadViews.size();
+
+        //继承父布局 body点击事件
+        super.onBindViewHolder(holder,position);
+
+
+    }
+
+
+
     /**
      * 是不是头部类型
      */
@@ -102,9 +119,6 @@ public abstract class MultiItemCommonAdapter<T> extends CommonRecycleViewAdapter
         int position = mFooterViews.indexOfKey(viewType);
         return position >= 0;
     }
-
-
-
 
     @Override
     public int getItemCount() {
@@ -161,7 +175,6 @@ public abstract class MultiItemCommonAdapter<T> extends CommonRecycleViewAdapter
 
     }
 
-
     //判断是不是头部位置
 
     public boolean isHeaderPosition(int position){
@@ -176,8 +189,5 @@ public abstract class MultiItemCommonAdapter<T> extends CommonRecycleViewAdapter
     private boolean isFooterPosition(int position) {
         return position >= (mHeadViews.size() + mDatas.size());
     }
-
-
-
 
 }
