@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.example.wangjingyun.commonrecycleviewsdk.adapter.CommonRecycleViewAdapter;
 import com.example.wangjingyun.commonrecycleviewsdk.adapter.MultiItemCommonAdapter;
 import com.example.wangjingyun.commonrecycleviewsdk.listener.MultiItemTypeListener;
+import com.example.wangjingyun.commonrecycleviewsdk.recycleview.HeadTailRecycleView;
 import com.example.wangjingyun.commonrecycleviewsdk.viewholder.CommonViewHolder;
 
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements CommonRecycleViewAdapter.OnItemClickListener{
 
-    private RecyclerView recyclerView;
+    private HeadTailRecycleView recyclerView;
 
    // private CommonRecycleViewAdapter<String> adapter;
 
@@ -40,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements CommonRecycleView
             datas.add(""+i);
 
         }
-        recyclerView= (RecyclerView) findViewById(R.id.recycleview);
+       recyclerView= (HeadTailRecycleView) findViewById(R.id.recycleview);
 
        recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
 
@@ -89,8 +90,6 @@ public class MainActivity extends AppCompatActivity implements CommonRecycleView
 
                    holder.setText(R.id.text,s);
                }
-
-
            }
        };
 
@@ -101,10 +100,11 @@ public class MainActivity extends AppCompatActivity implements CommonRecycleView
         adapter.setOnItemClickListener(this);
 
         recyclerView.setAdapter(adapter);
-        adapter.addHeadViews(view);
-        adapter.addHeadViews(view1);
-        adapter.addFooterViews(view);
-        adapter.adjustSpanSize(recyclerView);
+
+        recyclerView.addHeadView(view);
+
+        recyclerView.addFooterView(view1);
+
     }
 
     @Override
