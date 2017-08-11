@@ -105,6 +105,15 @@ public class MainActivity extends AppCompatActivity implements CommonRecycleView
 
         recyclerView.addFooterView(view1);
 
+        List<String> newdatas=new ArrayList<String>();
+
+        for(int i=1;i<=10;i++){
+
+            newdatas.add(""+i);
+
+        }
+      adapter.addDatas(newdatas);
+
     }
 
     @Override
