@@ -95,4 +95,24 @@ public class HeadTailRecycleView extends RecyclerView {
             multiItemCommonAdapter.removeFooterViews(view);
         }
     }
+
+    public int getHeadViewSize(){
+
+        if(multiItemCommonAdapter!=null){
+
+           return  multiItemCommonAdapter.getHeadViewSize();
+
+        }
+        return 0;
+    }
+    public int getFooterViewSize(){
+
+        if(multiItemCommonAdapter!=null){
+
+            return  multiItemCommonAdapter.getFootViewSize();
+
+        }
+        return 0;
+    }
+
 }

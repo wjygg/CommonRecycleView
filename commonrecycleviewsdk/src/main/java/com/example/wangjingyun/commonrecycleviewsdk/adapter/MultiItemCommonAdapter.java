@@ -193,6 +193,19 @@ public abstract class MultiItemCommonAdapter<T> extends CommonRecycleViewAdapter
     }
 
 
+    public int getHeadViewSize(){
+
+        return mHeadViews.size();
+
+    }
+
+    public int getFootViewSize(){
+
+        return mFooterViews.size();
+
+    }
+
+
     /**
      * 解决GridLayoutManager添加头部和底部不占用一行的问题
      *

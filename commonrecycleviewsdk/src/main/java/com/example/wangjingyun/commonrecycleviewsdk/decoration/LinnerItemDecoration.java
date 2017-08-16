@@ -3,11 +3,13 @@ package com.example.wangjingyun.commonrecycleviewsdk.decoration;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
 import com.example.wangjingyun.commonrecycleviewsdk.R;
+import com.example.wangjingyun.commonrecycleviewsdk.recycleview.HeadTailRecycleView;
 
 /**
  * 分割线
@@ -17,32 +19,61 @@ import com.example.wangjingyun.commonrecycleviewsdk.R;
 
 public class LinnerItemDecoration extends RecyclerView.ItemDecoration{
 
-    private Paint paint;
+    private Drawable mDrawable;
 
+    public LinnerItemDecoration(Drawable mDrawable){
 
-    public LinnerItemDecoration(){
-
-        paint=new Paint();
-     //   paint.setColor(R.color.DimGray);
+        this.mDrawable=mDrawable;
 
     }
 
     @Override
     public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
 
-        int childCount=parent.getChildCount();
+        //多布局recycleview
+        if(parent instanceof HeadTailRecycleView){
 
 
+            HeadTailRecycleView headTailRecycleView=(HeadTailRecycleView)parent;
 
-        for(int i=1;i<childCount;i++){
 
-            View childAt = parent.getChildAt(i);
+            int childCount=headTailRecycleView.getChildCount();
 
-       //     c.drawRect(,paint);
+            Rect rect=new Rect();
 
+            rect.left=parent.getPaddingLeft();
+
+            rect.right=parent.getWidth()-parent.getPaddingRight();
+
+            for(int i=headTailRecycleView.getHeadViewSize()+1;i<childCount;i++){
+
+                View childAt = parent.getChildAt(i);
+                rect.bottom=childAt.getTop();
+                rect.top=childAt.getTop()-mDrawable.getIntrinsicHeight();
+                mDrawable.setBounds(rect);
+                mDrawable.draw(c);
+
+            }
+        }else{
+            //单布局 recycyleview
+            int childCount=parent.getChildCount();
+
+            Rect rect=new Rect();
+
+            rect.left=parent.getPaddingLeft();
+
+            rect.right=parent.getWidth()-parent.getPaddingRight();
+
+            for(int i=1;i<childCount;i++){
+
+                View childAt = parent.getChildAt(i);
+                rect.bottom=childAt.getTop();
+                rect.top=childAt.getTop()-mDrawable.getIntrinsicHeight();
+                mDrawable.setBounds(rect);
+                mDrawable.draw(c);
+
+            }
         }
-
-
     }
 
     @Override
@@ -50,12 +81,27 @@ public class LinnerItemDecoration extends RecyclerView.ItemDecoration{
 
         int position = parent.getChildAdapterPosition(view);
 
+        if(parent instanceof HeadTailRecycleView){
 
-        if(position!=0){
+            HeadTailRecycleView headTailRecycleView=(HeadTailRecycleView)parent;
 
-            outRect.top=10;
+            if(position>headTailRecycleView.getHeadViewSize()){
+
+                outRect.top=mDrawable.getIntrinsicHeight();
+
+            }
+
+        }else{
+
+            if(position!=0){
+
+                outRect.top=mDrawable.getIntrinsicHeight();
+
+            }
+
 
         }
+
 
     }
 }

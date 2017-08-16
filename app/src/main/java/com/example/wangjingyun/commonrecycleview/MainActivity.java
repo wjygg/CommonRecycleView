@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.wangjingyun.commonrecycleviewsdk.adapter.CommonRecycleViewAdapter;
 import com.example.wangjingyun.commonrecycleviewsdk.adapter.MultiItemCommonAdapter;
+import com.example.wangjingyun.commonrecycleviewsdk.decoration.LinnerItemDecoration;
 import com.example.wangjingyun.commonrecycleviewsdk.listener.MultiItemTypeListener;
 import com.example.wangjingyun.commonrecycleviewsdk.recycleview.HeadTailRecycleView;
 import com.example.wangjingyun.commonrecycleviewsdk.viewholder.CommonViewHolder;
@@ -101,9 +102,10 @@ public class MainActivity extends AppCompatActivity implements CommonRecycleView
 
         recyclerView.setAdapter(adapter);
 
-        recyclerView.addHeadView(view);
+     //   recyclerView.addHeadView(view);
 
-        recyclerView.addFooterView(view1);
+      //  recyclerView.addFooterView(view1);
+        recyclerView.addItemDecoration(new LinnerItemDecoration(getResources().getDrawable(R.drawable.line_shape)));
 
         List<String> newdatas=new ArrayList<String>();
 
