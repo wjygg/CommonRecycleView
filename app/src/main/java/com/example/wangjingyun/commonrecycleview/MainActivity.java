@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.wangjingyun.commonrecycleviewsdk.adapter.CommonRecycleViewAdapter;
 import com.example.wangjingyun.commonrecycleviewsdk.adapter.MultiItemCommonAdapter;
+import com.example.wangjingyun.commonrecycleviewsdk.decoration.GridItemDecoration;
 import com.example.wangjingyun.commonrecycleviewsdk.decoration.LinnerItemDecoration;
 import com.example.wangjingyun.commonrecycleviewsdk.listener.MultiItemTypeListener;
 import com.example.wangjingyun.commonrecycleviewsdk.recycleview.HeadTailRecycleView;
@@ -22,11 +23,11 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements CommonRecycleViewAdapter.OnItemClickListener{
 
-    private HeadTailRecycleView recyclerView;
+    private RecyclerView recyclerView;
 
-   // private CommonRecycleViewAdapter<String> adapter;
+    private CommonRecycleViewAdapter<String> adapter;
 
-    private MultiItemCommonAdapter<String> adapter;
+   // private MultiItemCommonAdapter<String> adapter;
 
 
     @Override
@@ -42,24 +43,25 @@ public class MainActivity extends AppCompatActivity implements CommonRecycleView
             datas.add(""+i);
 
         }
-       recyclerView= (HeadTailRecycleView) findViewById(R.id.recycleview);
+       recyclerView= (RecyclerView) findViewById(R.id.recycleview);
 
-       recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+   //    recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
 
-  //    recyclerView.setLayoutManager(new GridLayoutManager(this,3));
+       recyclerView.setLayoutManager(new GridLayoutManager(this,3));
 
-       /* 单布局 adapter
+       // 单布局 adapter
        adapter=new CommonRecycleViewAdapter<String>(this,datas,R.layout.item_main_layout) {
 
-            @Override
-            public void convert(CommonViewHolder holder, String s) {
 
-                holder.setText(R.id.text,s);
-            }
-        };*/
+           @Override
+           public void convert(CommonViewHolder holder, int position, String s) {
+
+               holder.setText(R.id.text,s);
+           }
+       };
 
        //多布局adapter
-       adapter=new MultiItemCommonAdapter<String>(this, datas, new MultiItemTypeListener() {
+       /*adapter=new MultiItemCommonAdapter<String>(this, datas, new MultiItemTypeListener() {
            @Override
            public int getLayoutId(int itemType) {
 
@@ -92,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements CommonRecycleView
                    holder.setText(R.id.text,s);
                }
            }
-       };
+       };*/
 
         View view = LayoutInflater.from(this).inflate(R.layout.item_mainhead_layout, recyclerView,false);
 
@@ -105,16 +107,9 @@ public class MainActivity extends AppCompatActivity implements CommonRecycleView
      //   recyclerView.addHeadView(view);
 
       //  recyclerView.addFooterView(view1);
-        recyclerView.addItemDecoration(new LinnerItemDecoration(getResources().getDrawable(R.drawable.line_shape)));
+   //     recyclerView.addItemDecoration(new LinnerItemDecoration(getResources().getDrawable(R.drawable.line_shape)));
 
-        List<String> newdatas=new ArrayList<String>();
-
-        for(int i=1;i<=10;i++){
-
-            newdatas.add(""+i);
-
-        }
-      adapter.addDatas(newdatas);
+        recyclerView.addItemDecoration(new GridItemDecoration(getResources().getDrawable(R.drawable.line_shape)));
 
     }
 

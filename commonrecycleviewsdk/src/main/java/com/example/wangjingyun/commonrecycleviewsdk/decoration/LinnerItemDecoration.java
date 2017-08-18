@@ -37,7 +37,7 @@ public class LinnerItemDecoration extends RecyclerView.ItemDecoration{
             HeadTailRecycleView headTailRecycleView=(HeadTailRecycleView)parent;
 
 
-            int childCount=headTailRecycleView.getChildCount();
+            int childCount=parent.getLayoutManager().getItemCount();
 
             Rect rect=new Rect();
 
@@ -56,7 +56,7 @@ public class LinnerItemDecoration extends RecyclerView.ItemDecoration{
             }
         }else{
             //单布局 recycyleview
-            int childCount=parent.getChildCount();
+            int childCount=parent.getLayoutManager().getItemCount();
 
             Rect rect=new Rect();
 

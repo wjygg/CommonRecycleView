@@ -7,8 +7,11 @@
     android:layout_height="match_parent"
     >
 
-    <com.example.wangjingyun.commonrecycleviewsdk.recycleview.HeadTailRecycleView
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/recycleview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></com.example.wangjingyun.commonrecycleviewsdk.recycleview.HeadTailRecycleView>
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"></android.support.v7.widget.RecyclerView>
 </RelativeLayout>
