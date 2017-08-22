@@ -38,16 +38,15 @@ public class MainActivity extends AppCompatActivity implements CommonRecycleView
 
         List<String> datas=new ArrayList<String>();
 
-        for(int i=1;i<=100;i++){
+        for(int i=1;i<=3;i++){
 
             datas.add(""+i);
 
         }
        recyclerView= (RecyclerView) findViewById(R.id.recycleview);
-
+        recyclerView.setLayoutManager(new GridLayoutManager(this,3,GridLayoutManager.VERTICAL,false));
    //    recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
 
-       recyclerView.setLayoutManager(new GridLayoutManager(this,3));
 
        // 单布局 adapter
        adapter=new CommonRecycleViewAdapter<String>(this,datas,R.layout.item_main_layout) {
@@ -102,6 +101,9 @@ public class MainActivity extends AppCompatActivity implements CommonRecycleView
 
         adapter.setOnItemClickListener(this);
 
+        recyclerView.addItemDecoration(new GridItemDecoration(getResources().getDrawable(R.drawable.line_shape)));
+
+
         recyclerView.setAdapter(adapter);
 
      //   recyclerView.addHeadView(view);
@@ -109,7 +111,6 @@ public class MainActivity extends AppCompatActivity implements CommonRecycleView
       //  recyclerView.addFooterView(view1);
    //     recyclerView.addItemDecoration(new LinnerItemDecoration(getResources().getDrawable(R.drawable.line_shape)));
 
-        recyclerView.addItemDecoration(new GridItemDecoration(getResources().getDrawable(R.drawable.line_shape)));
 
     }
 
