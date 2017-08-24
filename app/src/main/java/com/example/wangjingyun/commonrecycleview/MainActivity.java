@@ -23,11 +23,11 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements CommonRecycleViewAdapter.OnItemClickListener{
 
-    private RecyclerView recyclerView;
+    private HeadTailRecycleView recyclerView;
 
-    private CommonRecycleViewAdapter<String> adapter;
+   // private CommonRecycleViewAdapter<String> adapter;
 
-   // private MultiItemCommonAdapter<String> adapter;
+    private MultiItemCommonAdapter<String> adapter;
 
 
     @Override
@@ -43,13 +43,13 @@ public class MainActivity extends AppCompatActivity implements CommonRecycleView
             datas.add(""+i);
 
         }
-       recyclerView= (RecyclerView) findViewById(R.id.recycleview);
-        recyclerView.setLayoutManager(new GridLayoutManager(this,3,GridLayoutManager.VERTICAL,false));
-   //    recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+       recyclerView= (HeadTailRecycleView) findViewById(R.id.recycleview);
+    //    recyclerView.setLayoutManager(new GridLayoutManager(this,3,GridLayoutManager.VERTICAL,false));
+       recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
 
 
        // 单布局 adapter
-       adapter=new CommonRecycleViewAdapter<String>(this,datas,R.layout.item_main_layout) {
+      /* adapter=new CommonRecycleViewAdapter<String>(this,datas,R.layout.item_main_layout) {
 
 
            @Override
@@ -57,10 +57,10 @@ public class MainActivity extends AppCompatActivity implements CommonRecycleView
 
                holder.setText(R.id.text,s);
            }
-       };
+       };*/
 
        //多布局adapter
-       /*adapter=new MultiItemCommonAdapter<String>(this, datas, new MultiItemTypeListener() {
+       adapter=new MultiItemCommonAdapter<String>(this, datas, new MultiItemTypeListener() {
            @Override
            public int getLayoutId(int itemType) {
 
@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements CommonRecycleView
                    holder.setText(R.id.text,s);
                }
            }
-       };*/
+       };
 
         View view = LayoutInflater.from(this).inflate(R.layout.item_mainhead_layout, recyclerView,false);
 
@@ -101,15 +101,16 @@ public class MainActivity extends AppCompatActivity implements CommonRecycleView
 
         adapter.setOnItemClickListener(this);
 
-        recyclerView.addItemDecoration(new GridItemDecoration(getResources().getDrawable(R.drawable.line_shape)));
+   //     recyclerView.addItemDecoration(new GridItemDecoration(getResources().getDrawable(R.drawable.line_shape)));
 
 
         recyclerView.setAdapter(adapter);
 
-     //   recyclerView.addHeadView(view);
-
-      //  recyclerView.addFooterView(view1);
-   //     recyclerView.addItemDecoration(new LinnerItemDecoration(getResources().getDrawable(R.drawable.line_shape)));
+      //  recyclerView.addHeadView(view);
+     //   recyclerView.addHeadView(view1);
+        recyclerView.addFooterView(view);
+        recyclerView.addFooterView(view1);
+        recyclerView.addItemDecoration(new LinnerItemDecoration(getResources().getDrawable(R.drawable.line_shape)));
 
 
     }

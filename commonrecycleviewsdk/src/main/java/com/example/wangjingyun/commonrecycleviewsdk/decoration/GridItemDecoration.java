@@ -8,6 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.wangjingyun.commonrecycleviewsdk.recycleview.HeadTailRecycleView;
+
 /**
  * Created by Administrator on 2017/8/16.
  */
@@ -24,27 +26,66 @@ public class GridItemDecoration extends RecyclerView.ItemDecoration{
 
     @Override
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-
         int bottom=mDrawable.getIntrinsicHeight();
         int right=mDrawable.getIntrinsicWidth();
 
-        int position=parent.getChildAdapterPosition(view);
 
-        int childCount=parent.getLayoutManager().getItemCount();
-        RecyclerView.LayoutManager manager=parent.getLayoutManager();
-        int spanCount=((GridLayoutManager)manager).getSpanCount();
-        //最右边一列
-        if(isRightPosition(position,spanCount,childCount)){
+        if(parent instanceof HeadTailRecycleView){
 
-            right=0;
+            HeadTailRecycleView headTailRecycleView=(HeadTailRecycleView)parent;
+
+            int position=headTailRecycleView.getChildAdapterPosition(view);
+            int childCount=headTailRecycleView.getLayoutManager().getItemCount();
+            RecyclerView.LayoutManager manager=headTailRecycleView.getLayoutManager();
+            int spanCount=((GridLayoutManager)manager).getSpanCount();
+
+            //中间内容
+            if(position>=headTailRecycleView.getHeadViewSize()&&position<childCount-headTailRecycleView.getFooterViewSize()){
+
+                position=position-headTailRecycleView.getHeadViewSize();
+                //最右边一列
+                if(isRightPosition(position,spanCount,childCount-headTailRecycleView.getHeadViewSize()-headTailRecycleView.getFooterViewSize())){
+
+                    right=0;
+                }
+                if(isBottomPosition(position,spanCount,childCount-headTailRecycleView.getHeadViewSize()-headTailRecycleView.getFooterViewSize())){
+
+                    bottom=0;
+                }
+
+                outRect.bottom=bottom;
+                outRect.right=right;
+
+
+            }else{
+                //头尾布局设置
+                outRect.bottom=0;
+                outRect.right=0;
+            }
+
+
+
+        }else{
+
+            //普通recycleview
+            int position=parent.getChildAdapterPosition(view);
+            int childCount=parent.getLayoutManager().getItemCount();
+            RecyclerView.LayoutManager manager=parent.getLayoutManager();
+            int spanCount=((GridLayoutManager)manager).getSpanCount();
+            //最右边一列
+            if(isRightPosition(position,spanCount,childCount)){
+
+                right=0;
+            }
+            if(isBottomPosition(position,spanCount,childCount)){
+
+                bottom=0;
+            }
+
+            outRect.bottom=bottom;
+            outRect.right=right;
         }
-        if(isBottomPosition(position,spanCount,childCount)){
 
-            bottom=0;
-        }
-
-        outRect.bottom=bottom;
-        outRect.right=right;
     }
 
     @Override
@@ -58,45 +99,91 @@ public class GridItemDecoration extends RecyclerView.ItemDecoration{
 
     private void drawVertical(Canvas c, RecyclerView parent){
 
-        int childCount=parent.getLayoutManager().getItemCount();
-
         Rect rect=new Rect();
 
-        for(int i=0;i<childCount;i++){
+        if(parent instanceof HeadTailRecycleView){
 
-            View childAt = parent.getChildAt(i);
-            RecyclerView.LayoutParams layoutParams= (RecyclerView.LayoutParams) childAt.getLayoutParams();
-            rect.left=childAt.getRight()+layoutParams.rightMargin;
-            rect.top=childAt.getTop()-layoutParams.topMargin;
-            rect.right= rect.left+mDrawable.getIntrinsicWidth();
-            rect.bottom=childAt.getBottom()+layoutParams.bottomMargin;
-            mDrawable.setBounds(rect);
+            HeadTailRecycleView headTailRecycleView = (HeadTailRecycleView) parent;
 
-            mDrawable.draw(c);
+            int childCount=headTailRecycleView.getLayoutManager().getItemCount()-headTailRecycleView.getFooterViewSize();
+
+            for(int i=0+headTailRecycleView.getHeadViewSize();i<childCount;i++){
+
+                View childAt = parent.getChildAt(i);
+                RecyclerView.LayoutParams layoutParams= (RecyclerView.LayoutParams) childAt.getLayoutParams();
+                rect.left=childAt.getRight()+layoutParams.rightMargin;
+                rect.top=childAt.getTop()-layoutParams.topMargin;
+                rect.right= rect.left+mDrawable.getIntrinsicWidth();
+                rect.bottom=childAt.getBottom()+layoutParams.bottomMargin;
+                mDrawable.setBounds(rect);
+
+                mDrawable.draw(c);
+            }
+
+        }else{
+
+            int childCount=parent.getLayoutManager().getItemCount();
+
+            for(int i=0;i<childCount;i++){
+
+                View childAt = parent.getChildAt(i);
+                RecyclerView.LayoutParams layoutParams= (RecyclerView.LayoutParams) childAt.getLayoutParams();
+                rect.left=childAt.getRight()+layoutParams.rightMargin;
+                rect.top=childAt.getTop()-layoutParams.topMargin;
+                rect.right= rect.left+mDrawable.getIntrinsicWidth();
+                rect.bottom=childAt.getBottom()+layoutParams.bottomMargin;
+                mDrawable.setBounds(rect);
+
+                mDrawable.draw(c);
+            }
+
         }
-
-
     }
 
     private void drawHorizontal(Canvas c, RecyclerView parent) {
 
-
         Rect rect=new Rect();
 
-        int childCount=parent.getLayoutManager().getItemCount();
+        if(parent instanceof HeadTailRecycleView){
 
-        for(int i=0;i<childCount;i++){
+            HeadTailRecycleView headTailRecycleView=(HeadTailRecycleView)parent;
 
-            View childAt = parent.getChildAt(i);
-            RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams) childAt.getLayoutParams();
-            rect.left=childAt.getLeft()-layoutParams.leftMargin;
-            rect.top=childAt.getBottom()+layoutParams.topMargin;
-            rect.right=childAt.getRight()+layoutParams.rightMargin+mDrawable.getIntrinsicWidth();
-            rect.bottom=rect.top+mDrawable.getIntrinsicHeight();
+            int childCount=headTailRecycleView.getLayoutManager().getItemCount()-headTailRecycleView.getFooterViewSize();
 
-            mDrawable.setBounds(rect);
-            mDrawable.draw(c);
+            for(int i=0+headTailRecycleView.getHeadViewSize();i<childCount;i++){
+
+                View childAt = parent.getChildAt(i);
+                RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams) childAt.getLayoutParams();
+                rect.left=childAt.getLeft()-layoutParams.leftMargin;
+                rect.top=childAt.getBottom()+layoutParams.topMargin;
+                rect.right=childAt.getRight()+layoutParams.rightMargin+mDrawable.getIntrinsicWidth();
+                rect.bottom=rect.top+mDrawable.getIntrinsicHeight();
+
+                mDrawable.setBounds(rect);
+                mDrawable.draw(c);
+            }
+        }else{
+
+            int childCount=parent.getLayoutManager().getItemCount();
+
+            for(int i=0;i<childCount;i++){
+
+                View childAt = parent.getChildAt(i);
+                RecyclerView.LayoutParams layoutParams = (RecyclerView.LayoutParams) childAt.getLayoutParams();
+                rect.left=childAt.getLeft()-layoutParams.leftMargin;
+                rect.top=childAt.getBottom()+layoutParams.topMargin;
+                rect.right=childAt.getRight()+layoutParams.rightMargin+mDrawable.getIntrinsicWidth();
+                rect.bottom=rect.top+mDrawable.getIntrinsicHeight();
+
+                mDrawable.setBounds(rect);
+                mDrawable.draw(c);
+            }
+
         }
+
+
+
+
 
     }
 

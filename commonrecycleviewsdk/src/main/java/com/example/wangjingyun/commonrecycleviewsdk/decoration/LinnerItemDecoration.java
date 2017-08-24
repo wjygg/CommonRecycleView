@@ -45,7 +45,7 @@ public class LinnerItemDecoration extends RecyclerView.ItemDecoration{
 
             rect.right=parent.getWidth()-parent.getPaddingRight();
 
-            for(int i=headTailRecycleView.getHeadViewSize()+1;i<childCount;i++){
+            for(int i=headTailRecycleView.getHeadViewSize()+1;i<childCount-headTailRecycleView.getFooterViewSize();i++){
 
                 View childAt = parent.getChildAt(i);
                 rect.bottom=childAt.getTop();
@@ -85,7 +85,9 @@ public class LinnerItemDecoration extends RecyclerView.ItemDecoration{
 
             HeadTailRecycleView headTailRecycleView=(HeadTailRecycleView)parent;
 
-            if(position>headTailRecycleView.getHeadViewSize()){
+            int childCount=headTailRecycleView.getLayoutManager().getItemCount();
+
+            if(position>headTailRecycleView.getHeadViewSize()&&position<childCount-headTailRecycleView.getFooterViewSize()){
 
                 outRect.top=mDrawable.getIntrinsicHeight();
 
