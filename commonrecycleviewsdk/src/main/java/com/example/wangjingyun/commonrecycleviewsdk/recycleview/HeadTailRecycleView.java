@@ -19,7 +19,7 @@ import java.util.List;
 public class HeadTailRecycleView extends RecyclerView {
 
 
-    private MultiItemCommonAdapter multiItemCommonAdapter;
+    public MultiItemCommonAdapter multiItemCommonAdapter;
 
     public HeadTailRecycleView(Context context) {
         super(context);
@@ -52,8 +52,6 @@ public class HeadTailRecycleView extends RecyclerView {
             super.setAdapter(adapter);
 
             multiItemCommonAdapter.adjustSpanSize(this);
-
-
 
         }else{
 

@@ -10,12 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.wangjingyun.commonrecycleview.creator.RefreshCreator;
 import com.example.wangjingyun.commonrecycleviewsdk.adapter.CommonRecycleViewAdapter;
 import com.example.wangjingyun.commonrecycleviewsdk.adapter.MultiItemCommonAdapter;
 import com.example.wangjingyun.commonrecycleviewsdk.decoration.GridItemDecoration;
 import com.example.wangjingyun.commonrecycleviewsdk.decoration.LinnerItemDecoration;
 import com.example.wangjingyun.commonrecycleviewsdk.listener.MultiItemTypeListener;
 import com.example.wangjingyun.commonrecycleviewsdk.recycleview.HeadTailRecycleView;
+import com.example.wangjingyun.commonrecycleviewsdk.recycleview.RefreshRecycleView;
 import com.example.wangjingyun.commonrecycleviewsdk.viewholder.CommonViewHolder;
 
 import java.util.ArrayList;
@@ -23,7 +25,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements CommonRecycleViewAdapter.OnItemClickListener{
 
-    private HeadTailRecycleView recyclerView;
+    private RefreshRecycleView recyclerView;
 
    // private CommonRecycleViewAdapter<String> adapter;
 
@@ -43,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements CommonRecycleView
             datas.add(""+i);
 
         }
-       recyclerView= (HeadTailRecycleView) findViewById(R.id.recycleview);
+       recyclerView= (RefreshRecycleView) findViewById(R.id.recycleview);
     //    recyclerView.setLayoutManager(new GridLayoutManager(this,3,GridLayoutManager.VERTICAL,false));
        recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
 
@@ -103,14 +105,14 @@ public class MainActivity extends AppCompatActivity implements CommonRecycleView
 
    //     recyclerView.addItemDecoration(new GridItemDecoration(getResources().getDrawable(R.drawable.line_shape)));
 
-
+        recyclerView.addRefreshViewCreator(new RefreshCreator());
         recyclerView.setAdapter(adapter);
 
       //  recyclerView.addHeadView(view);
      //   recyclerView.addHeadView(view1);
-        recyclerView.addFooterView(view);
-        recyclerView.addFooterView(view1);
-        recyclerView.addItemDecoration(new LinnerItemDecoration(getResources().getDrawable(R.drawable.line_shape)));
+       // recyclerView.addFooterView(view);
+        //recyclerView.addFooterView(view1);
+       // recyclerView.addItemDecoration(new LinnerItemDecoration(getResources().getDrawable(R.drawable.line_shape)));
 
 
     }
