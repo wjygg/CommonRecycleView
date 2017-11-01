@@ -2,28 +2,21 @@ package com.example.wangjingyun.commonrecycleview;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.wangjingyun.commonrecycleview.creator.RefreshCreator;
 import com.example.wangjingyun.commonrecycleviewsdk.adapter.CommonRecycleViewAdapter;
 import com.example.wangjingyun.commonrecycleviewsdk.adapter.MultiItemCommonAdapter;
-import com.example.wangjingyun.commonrecycleviewsdk.decoration.GridItemDecoration;
-import com.example.wangjingyun.commonrecycleviewsdk.decoration.LinnerItemDecoration;
 import com.example.wangjingyun.commonrecycleviewsdk.listener.MultiItemTypeListener;
-import com.example.wangjingyun.commonrecycleviewsdk.recycleview.HeadTailRecycleView;
 import com.example.wangjingyun.commonrecycleviewsdk.recycleview.RefreshRecycleView;
 import com.example.wangjingyun.commonrecycleviewsdk.viewholder.CommonViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements CommonRecycleViewAdapter.OnItemClickListener{
+public class MainActivity extends AppCompatActivity implements CommonRecycleViewAdapter.OnItemClickListener,RefreshRecycleView.OnRefreshListener{
 
     private RefreshRecycleView recyclerView;
 
@@ -97,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements CommonRecycleView
            }
        };
 
-        View view = LayoutInflater.from(this).inflate(R.layout.item_mainhead_layout, recyclerView,false);
+        View view = LayoutInflater.from(this).inflate(R.layout.item_refresh_layout, recyclerView,false);
 
         View view1 = LayoutInflater.from(this).inflate(R.layout.item_twomainhead_layout, recyclerView,false);
 
@@ -105,13 +98,15 @@ public class MainActivity extends AppCompatActivity implements CommonRecycleView
 
    //     recyclerView.addItemDecoration(new GridItemDecoration(getResources().getDrawable(R.drawable.line_shape)));
 
-        recyclerView.addRefreshViewCreator(new RefreshCreator());
+
         recyclerView.setAdapter(adapter);
 
+        recyclerView.setOnRefreshListener(this);
       //  recyclerView.addHeadView(view);
      //   recyclerView.addHeadView(view1);
        // recyclerView.addFooterView(view);
         //recyclerView.addFooterView(view1);
+       // recyclerView.addRefreshViewCreator(new RefreshCreator()); 自定义下拉布局动画
        // recyclerView.addItemDecoration(new LinnerItemDecoration(getResources().getDrawable(R.drawable.line_shape)));
 
 
@@ -128,5 +123,13 @@ public class MainActivity extends AppCompatActivity implements CommonRecycleView
     public void onItemClick(int position) {
 
         Toast.makeText(MainActivity.this,""+position,Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onRefresh() {
+      //正在 刷新  请求接口
+
+        //停止刷新
+        recyclerView.onStopRefresh();
     }
 }
