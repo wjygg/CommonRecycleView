@@ -28,9 +28,9 @@ public class LoadRefreshRecycleView extends RefreshRecycleView{
     private LoadRefreshViewCreator loadRefreshViewCreator;
 
     //手指按下的y值
-    private int mFingerDownY;
+    private float mFingerDownY;
 
-    private boolean mCurrentDrag=false;
+    private boolean mCurrentDownDrag=false;
 
     // 当前的状态
     private int mCurrentLoadStatus;
@@ -82,6 +82,8 @@ public class LoadRefreshRecycleView extends RefreshRecycleView{
 
                 View view=loadRefreshViewCreator.getLoadRefreshView(getContext(),this);
 
+                addFooterView(view);
+
                 this.loadRefreshView=view;
             }else{
 
@@ -89,7 +91,7 @@ public class LoadRefreshRecycleView extends RefreshRecycleView{
 
                 if(loadRefreshView!=null){
 
-                    multiItemCommonAdapter.addFooterViews(loadRefreshView);
+                    addFooterView(loadRefreshView);
 
                     this.loadRefreshView=loadRefreshView;
                 }
@@ -106,12 +108,12 @@ public class LoadRefreshRecycleView extends RefreshRecycleView{
 
             case MotionEvent.ACTION_DOWN:
                 //子控件消费 down 事件 进不了ontouchEvent
-                mFingerDownY=ev.getAction();
+                mFingerDownY=ev.getRawY();
                 break;
 
             case MotionEvent.ACTION_UP:
                //向上滑动松开了初始状态
-                if (mCurrentDrag) {
+                if (mCurrentDownDrag) {
                 restoreLoadView();
                  }
                 break;
@@ -125,15 +127,23 @@ public class LoadRefreshRecycleView extends RefreshRecycleView{
     public boolean onTouchEvent(MotionEvent ev) {
 
         switch (ev.getAction()){
-            case MotionEvent.ACTION_DOWN:
-                //没有滚动到底部 不处理
-                if(canChildScrollUp()|| mCurrentLoadStatus == LOAD_STATUS_LOADING){
 
-                  super.onTouchEvent(ev);
+            case MotionEvent.ACTION_MOVE:
+
+                //没有滚动到底部 不处理
+                if(canChildScrollDown()|| mCurrentLoadStatus == LOAD_STATUS_LOADING){
+
+                   return super.onTouchEvent(ev);
                 }
 
+
+                if (loadRefreshViewCreator != null) {
+                    loadRefreshViewHeight = loadRefreshView.getMeasuredHeight();
+                }
+
+
                 // 解决上拉加载更多自动滚动问题
-                if (mCurrentDrag) {
+                if (mCurrentDownDrag) {
                     scrollToPosition(getAdapter().getItemCount() - 1);
                 }
 
@@ -144,12 +154,10 @@ public class LoadRefreshRecycleView extends RefreshRecycleView{
                 if (distanceY < 0) {
                     setLoadViewMarginBottom(-distanceY);
                     updateLoadStatus(-distanceY);
-                    mCurrentDrag = true;
+                    mCurrentDownDrag = true;
                     return true;
                 }
-                break;
 
-            case MotionEvent.ACTION_MOVE:
                 break;
         }
 
@@ -186,24 +194,10 @@ public class LoadRefreshRecycleView extends RefreshRecycleView{
         }
     }
     //判断是不是滚到底部 if true 没有滚动到底部
-    public boolean canChildScrollUp() {
+    public boolean canChildScrollDown() {
 
         return ViewCompat.canScrollVertically(this, 1);
     }
-
-    @Override
-    protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        super.onLayout(changed, l, t, r, b);
-
-        if(changed){
-            if(loadRefreshView!=null&&loadRefreshViewHeight<=0){
-                //获取底部布局的高度
-                loadRefreshViewHeight=loadRefreshView.getMeasuredHeight();
-            }
-
-        }
-    }
-
     /**
      * 重置当前加载更多状态
      */
@@ -232,7 +226,7 @@ public class LoadRefreshRecycleView extends RefreshRecycleView{
             }
         });
         animator.start();
-        mCurrentDrag = false;
+        mCurrentDownDrag = false;
     }
 
     /**

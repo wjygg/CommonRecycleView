@@ -1,6 +1,8 @@
 package com.example.wangjingyun.commonrecycleview;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
@@ -9,21 +11,32 @@ import android.widget.Toast;
 
 import com.example.wangjingyun.commonrecycleviewsdk.adapter.CommonRecycleViewAdapter;
 import com.example.wangjingyun.commonrecycleviewsdk.adapter.MultiItemCommonAdapter;
+import com.example.wangjingyun.commonrecycleviewsdk.decoration.LinnerItemDecoration;
 import com.example.wangjingyun.commonrecycleviewsdk.listener.MultiItemTypeListener;
+import com.example.wangjingyun.commonrecycleviewsdk.recycleview.LoadRefreshRecycleView;
 import com.example.wangjingyun.commonrecycleviewsdk.recycleview.RefreshRecycleView;
 import com.example.wangjingyun.commonrecycleviewsdk.viewholder.CommonViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements CommonRecycleViewAdapter.OnItemClickListener,RefreshRecycleView.OnRefreshListener{
+public class MainActivity extends AppCompatActivity implements CommonRecycleViewAdapter.OnItemClickListener,RefreshRecycleView.OnRefreshListener,LoadRefreshRecycleView.OnLoadMoreListener{
 
-    private RefreshRecycleView recyclerView;
+    private LoadRefreshRecycleView recyclerView;
 
    // private CommonRecycleViewAdapter<String> adapter;
 
     private MultiItemCommonAdapter<String> adapter;
 
+    private Handler handler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+
+            recyclerView.onStopLoad();
+            Toast.makeText(MainActivity.this,"请求成功",Toast.LENGTH_SHORT).show();
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,12 +46,12 @@ public class MainActivity extends AppCompatActivity implements CommonRecycleView
 
         List<String> datas=new ArrayList<String>();
 
-        for(int i=1;i<=3;i++){
+        for(int i=1;i<=10;i++){
 
             datas.add(""+i);
 
         }
-       recyclerView= (RefreshRecycleView) findViewById(R.id.recycleview);
+       recyclerView= (LoadRefreshRecycleView) findViewById(R.id.recycleview);
     //    recyclerView.setLayoutManager(new GridLayoutManager(this,3,GridLayoutManager.VERTICAL,false));
        recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
 
@@ -102,12 +115,13 @@ public class MainActivity extends AppCompatActivity implements CommonRecycleView
         recyclerView.setAdapter(adapter);
 
         recyclerView.setOnRefreshListener(this);
+        recyclerView.setOnLoadMoreListener(this);
       //  recyclerView.addHeadView(view);
      //   recyclerView.addHeadView(view1);
        // recyclerView.addFooterView(view);
         //recyclerView.addFooterView(view1);
        // recyclerView.addRefreshViewCreator(new RefreshCreator()); 自定义下拉布局动画
-       // recyclerView.addItemDecoration(new LinnerItemDecoration(getResources().getDrawable(R.drawable.line_shape)));
+        recyclerView.addItemDecoration(new LinnerItemDecoration(getResources().getDrawable(R.drawable.line_shape)));
 
 
     }
@@ -131,5 +145,26 @@ public class MainActivity extends AppCompatActivity implements CommonRecycleView
 
         //停止刷新
         recyclerView.onStopRefresh();
+    }
+
+    @Override
+    public void onLoad() {
+
+        Toast.makeText(MainActivity.this,"请求中",Toast.LENGTH_SHORT).show();
+        new Thread(){
+
+            @Override
+            public void run() {
+                super.run();
+                try {
+                    sleep(3000);
+                    Message msg=new Message();
+                    handler.sendMessage(msg);
+
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
     }
 }

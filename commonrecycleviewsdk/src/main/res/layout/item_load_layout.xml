@@ -5,7 +5,7 @@
 
     <TextView
         android:id="@+id/tv_text"
-        android:text="上拉刷新"
+        android:text="上拉加载更多"
         android:textSize="20dp"
         android:gravity="center"
         android:textColor="@android:color/black"

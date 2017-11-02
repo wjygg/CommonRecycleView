@@ -48,11 +48,14 @@ public class LinnerItemDecoration extends RecyclerView.ItemDecoration{
             for(int i=headTailRecycleView.getHeadViewSize()+1;i<childCount-headTailRecycleView.getFooterViewSize();i++){
 
                 View childAt = parent.getChildAt(i);
-                rect.bottom=childAt.getTop();
-                rect.top=childAt.getTop()-mDrawable.getIntrinsicHeight();
-                mDrawable.setBounds(rect);
-                mDrawable.draw(c);
 
+                if(childAt!=null){
+
+                    rect.bottom=childAt.getTop();
+                    rect.top=childAt.getTop()-mDrawable.getIntrinsicHeight();
+                    mDrawable.setBounds(rect);
+                    mDrawable.draw(c);
+                }
             }
         }else{
             //单布局 recycyleview

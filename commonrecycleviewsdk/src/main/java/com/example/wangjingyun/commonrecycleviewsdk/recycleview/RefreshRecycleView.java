@@ -95,10 +95,8 @@ public class RefreshRecycleView extends HeadTailRecycleView{
                 //没有滑动到头部 不处理 正在刷新不处理
                 if(canChildScrollUp()|| mCurrentRefreshStatus == REFRESH_STATUS_REFRESHING){
 
-                super.onTouchEvent(ev);
+                return super.onTouchEvent(ev);
             }
-
-
                 if (mCurrentDrag) {
                     scrollToPosition(0);
                 }
@@ -109,9 +107,9 @@ public class RefreshRecycleView extends HeadTailRecycleView{
                 if (distanceY > 0) {
                     int marginTop = distanceY - mRefreshViewHeight;
                     setRefreshViewMarginTop(marginTop);
-                    updateRefreshStatus(marginTop);
                     mCurrentDrag = true;
-                    return false;
+                    updateRefreshStatus(marginTop);
+                    return true;
                 }
                 break;
         }
@@ -191,7 +189,6 @@ public class RefreshRecycleView extends HeadTailRecycleView{
                     // 隐藏头部刷新的View  marginTop  多留出1px防止无法判断是不是滚动到头部问题
                     setRefreshViewMarginTop(-mRefreshViewHeight + 1);
                 }
-
             }
 
         }

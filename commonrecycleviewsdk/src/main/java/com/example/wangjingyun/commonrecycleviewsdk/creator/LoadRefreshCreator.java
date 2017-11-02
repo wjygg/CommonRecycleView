@@ -30,7 +30,6 @@ public class LoadRefreshCreator extends LoadRefreshViewCreator{
     }
 
     /**
-     *
      * @param currentDragHeight 下拉的高度
      * @param loadViewHeight  view 的高度
      * @param currentLoadStatus 状态
@@ -38,9 +37,9 @@ public class LoadRefreshCreator extends LoadRefreshViewCreator{
     @Override
     public void onPull(int currentDragHeight, int loadViewHeight, int currentLoadStatus) {
 
-        float rotate = ((float) currentDragHeight) / loadViewHeight;
+        /*float rotate = ((float) currentDragHeight) / loadViewHeight;
         // 不断下拉的过程中不断的旋转图片
-        view.setRotation(rotate * 360);
+        view.setRotation(rotate * 360);*/
     }
 
     /**
