@@ -17,13 +17,15 @@ import com.example.wangjingyun.commonrecycleviewsdk.listener.RefreshViewCreator;
 
 public class RefreshCreator extends RefreshViewCreator{
 
-    private View view;
+    // 加载数据的ImageView
+    private View mRefreshIv;
     //回调头部局
     @Override
     public View getRefreshView(Context context, ViewGroup parent) {
 
+
         View refreshView = LayoutInflater.from(context).inflate(R.layout.item_refresh_layout, parent, false);
-        view=refreshView.findViewById(R.id.tv_text);
+        mRefreshIv = refreshView.findViewById(R.id.refresh_iv);
         return refreshView;
 
     }
@@ -32,9 +34,8 @@ public class RefreshCreator extends RefreshViewCreator{
     @Override
     public void pull(int currentDragHeight, int refreshViewHeight, int currentRefreshStatus) {
         float rotate = ((float) currentDragHeight) / refreshViewHeight;
-        // 不断下拉的过程中不断的旋转图片
-        view.setRotation(rotate * 360);
-
+        // 不断下拉的过程中旋转图片
+        mRefreshIv.setRotation(rotate * 360);
     }
 
     //正在刷新
@@ -46,7 +47,7 @@ public class RefreshCreator extends RefreshViewCreator{
                 Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         animation.setRepeatCount(-1);
         animation.setDuration(1000);
-        view.startAnimation(animation);
+        mRefreshIv.startAnimation(animation);
     }
 
     //停止刷新
@@ -54,8 +55,8 @@ public class RefreshCreator extends RefreshViewCreator{
     public void onStopRefresh() {
 
         // 停止加载的时候清除动画
-        view.setRotation(0);
-        view.clearAnimation();
+        mRefreshIv.setRotation(0);
+        mRefreshIv.clearAnimation();
 
     }
 }

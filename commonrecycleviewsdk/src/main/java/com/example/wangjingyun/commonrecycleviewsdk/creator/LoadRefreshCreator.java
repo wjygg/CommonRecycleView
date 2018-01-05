@@ -6,9 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
+import android.widget.TextView;
 
 import com.example.wangjingyun.commonrecycleviewsdk.R;
 import com.example.wangjingyun.commonrecycleviewsdk.listener.LoadRefreshViewCreator;
+import com.example.wangjingyun.commonrecycleviewsdk.recycleview.LoadRefreshRecycleView;
 
 /**
  * Created by Administrator on 2017/11/1.
@@ -16,7 +18,10 @@ import com.example.wangjingyun.commonrecycleviewsdk.listener.LoadRefreshViewCrea
 
 public class LoadRefreshCreator extends LoadRefreshViewCreator{
 
-    View view;
+    // 加载数据的ImageView
+    private TextView mLoadTv;
+    private View mRefreshIv;
+
     /**
      * @param context 上下文
      * @param parent recycleview
@@ -24,8 +29,10 @@ public class LoadRefreshCreator extends LoadRefreshViewCreator{
      */
     @Override
     public View getLoadRefreshView(Context context, ViewGroup parent) {
+
         View refreshView = LayoutInflater.from(context).inflate(R.layout.item_load_layout, parent, false);
-        view=refreshView.findViewById(R.id.tv_text);
+        mLoadTv = (TextView) refreshView.findViewById(R.id.load_tv);
+        mRefreshIv = refreshView.findViewById(R.id.refresh_iv);
         return refreshView;
     }
 
@@ -35,11 +42,14 @@ public class LoadRefreshCreator extends LoadRefreshViewCreator{
      * @param currentLoadStatus 状态
      */
     @Override
-    public void onPull(int currentDragHeight, int loadViewHeight, int currentLoadStatus) {
+    public void onLoad(int currentDragHeight, int loadViewHeight, int currentLoadStatus) {
 
-        /*float rotate = ((float) currentDragHeight) / loadViewHeight;
-        // 不断下拉的过程中不断的旋转图片
-        view.setRotation(rotate * 360);*/
+        if (currentLoadStatus == LoadRefreshRecycleView.LOAD_STATUS_PULL_DOWN_REFRESH) {
+            mLoadTv.setText("上拉加载更多");
+        }
+        if (currentLoadStatus == LoadRefreshRecycleView.LOAD_STATUS_LOOSEN_LOADING) {
+            mLoadTv.setText("松开加载更多");
+        }
     }
 
     /**
@@ -48,18 +58,25 @@ public class LoadRefreshCreator extends LoadRefreshViewCreator{
     @Override
     public void onLoading() {
         // 刷新的时候不断旋转
+        mLoadTv.setVisibility(View.INVISIBLE);
+        mRefreshIv.setVisibility(View.VISIBLE);
+
+        // 加载的时候不断旋转
         RotateAnimation animation = new RotateAnimation(0, 720,
                 Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         animation.setRepeatCount(-1);
         animation.setDuration(1000);
-        view.startAnimation(animation);
+        mRefreshIv.startAnimation(animation);
     }
 
     @Override
     public void onStopLoading() {
 
         // 停止加载的时候清除动画
-        view.setRotation(0);
-        view.clearAnimation();
+        mRefreshIv.setRotation(0);
+        mRefreshIv.clearAnimation();
+        mLoadTv.setText("上拉加载更多");
+        mLoadTv.setVisibility(View.VISIBLE);
+        mRefreshIv.setVisibility(View.INVISIBLE);
     }
 }

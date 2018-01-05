@@ -190,7 +190,7 @@ public class LoadRefreshRecycleView extends RefreshRecycleView{
         }
 
         if (loadRefreshViewCreator != null) {
-            loadRefreshViewCreator.onPull(distanceY, loadRefreshViewHeight, mCurrentLoadStatus);
+            loadRefreshViewCreator.onLoad(distanceY, loadRefreshViewHeight, mCurrentLoadStatus);
         }
     }
     //判断是不是滚到底部 if true 没有滚动到底部

@@ -1,15 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="100dp">
+    android:background="@color/gainsboro"
+    android:layout_height="50dp">
+
+    <ImageView
+        android:id="@+id/refresh_iv"
+        android:layout_width="30dp"
+       android:layout_centerInParent="true"
+        android:visibility="invisible"
+        android:src="@mipmap/list_load_more"
+        android:layout_height="30dp"/>
 
     <TextView
-        android:id="@+id/tv_text"
-        android:text="上拉加载更多"
-        android:textSize="20dp"
-        android:gravity="center"
+        android:id="@+id/load_tv"
+        android:layout_width="wrap_content"
+        android:layout_centerInParent="true"
         android:textColor="@android:color/black"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:text="上拉加载更多"
+        android:layout_height="wrap_content" />
 
-</LinearLayout>
+</RelativeLayout>

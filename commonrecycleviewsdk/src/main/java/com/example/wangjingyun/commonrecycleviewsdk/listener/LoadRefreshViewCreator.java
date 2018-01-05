@@ -23,7 +23,7 @@ public abstract class LoadRefreshViewCreator {
      * @param loadViewHeight  view 的高度
      * @param currentLoadStatus 状态
      */
-    public abstract void onPull(int currentDragHeight, int loadViewHeight, int currentLoadStatus);
+    public abstract void onLoad(int currentDragHeight, int loadViewHeight, int currentLoadStatus);
 
     /**
      * 正在加载中

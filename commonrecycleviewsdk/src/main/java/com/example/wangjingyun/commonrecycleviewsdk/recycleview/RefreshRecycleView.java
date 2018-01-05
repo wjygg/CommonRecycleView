@@ -201,9 +201,6 @@ public class RefreshRecycleView extends HeadTailRecycleView{
         MarginLayoutParams params = (MarginLayoutParams) refreshView.getLayoutParams();
         if (marginTop < -mRefreshViewHeight + 1) {
             marginTop = -mRefreshViewHeight + 1;
-            //设置只能拖动 的距离为 当前 view的高度
-        }else if(marginTop>=0){
-            marginTop=0;
         }
         params.topMargin = marginTop;
         refreshView.setLayoutParams(params);

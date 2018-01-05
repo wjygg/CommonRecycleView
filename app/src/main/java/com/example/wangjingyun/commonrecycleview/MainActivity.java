@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements CommonRecycleView
 
         List<String> datas=new ArrayList<String>();
 
-        for(int i=1;i<=10;i++){
+        for(int i=1;i<=100;i++){
 
             datas.add(""+i);
 
